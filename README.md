@@ -2,7 +2,7 @@
 
 ![NCM MCP Servers](assets/screenshot.png)
 
-A suite of three focused MCP (Model Context Protocol) servers for the Cradlepoint NCM API, split by domain responsibility for optimal LLM tool selection.
+A suite of three focused MCP (Model Context Protocol) servers for the Ericsson Enterprise Wireless NCM API, split by domain responsibility for optimal LLM tool selection.
 
 ## Architecture
 
@@ -131,12 +131,6 @@ Add to your MCP settings (e.g. `.kiro/settings/mcp.json`):
 CRUD operations are consolidated into `manage_*` tools with an `action` parameter:
 
 ```python
-# Before (3 separate tools):
-rename_router(router_id=123, new_name="foo")
-delete_router(router_id=123)
-update_router_fields(router_id=123, description="bar")
-
-# After (1 tool with action dispatch):
 manage_router(action="rename", router_id=123, new_name="foo")
 manage_router(action="delete", router_id=123)
 manage_router(action="update", router_id=123, description="bar")
@@ -145,13 +139,6 @@ manage_router(action="update", router_id=123, description="bar")
 Read-only metrics are consolidated by type:
 
 ```python
-# Before (4 separate tools):
-get_signal_samples(net_device=1)
-get_usage_samples(net_device=1)
-get_wan_metrics(net_device=1)
-get_modem_metrics(net_device=1)
-
-# After (1 tool with metric_type):
 get_net_device_metrics(metric_type="signal", net_device=1)
 get_net_device_metrics(metric_type="usage", net_device=1)
 get_net_device_metrics(metric_type="wan", net_device=1)
